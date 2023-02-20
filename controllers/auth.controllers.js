@@ -15,11 +15,9 @@ exports.signup = (req, res) => {
         phone: req.body.phone,
         password: bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(req.body.password, salt, function(err, hash) {
-              // Store hash in your password DB.
             });
           })
     });
-    // console.log(req.body.username)
     user.save((err, user) => {
         if (err) {
             res.status(500).send({ message: err });
@@ -87,11 +85,8 @@ exports.signin = (req, res) => {
             var token = jwt.sign({ 
                 id: user.id,
                 username: user.username,
-                firstname: user.firstname,
-                surname: user.surname,
                 roles: user.roles,
                 image: user.image,
-                phone: user.phone,
                 email: user.email,
             }, config.secret, {
                 expiresIn: 86400 // 24 hours
@@ -100,9 +95,7 @@ exports.signin = (req, res) => {
                 authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
             }
             res.status(200).send({
-                id: user._id, username: user.username, firstname: user.firstname, surname: user.surname, phone: user.phone, userImage: user.image, 
-                userAbout: user.about, profession: user.profession, userMail: user.email,
-                roles: authorities, accessToken: token
+                id: user._id, username: user.username, userImage: user.image,userMail: user.email,roles: authorities, accessToken: token
             });
         });
 };
