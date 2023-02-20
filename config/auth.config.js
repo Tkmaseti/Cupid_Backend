@@ -1,2 +1,3 @@
 module.exports = {
-    secret: "fine-is-the-secret-key"};
+    secret: "coding-is-fun"
+};

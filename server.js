@@ -46,14 +46,6 @@ function initial() {
         console.log("added 'user' to roles collection");
       });
       new Role({
-        name: "moderator",
-      }).save((err) => {
-        if (err) {
-          console.log("error", err);
-        }
-        console.log("added 'moderator' to roles collection");
-      });
-      new Role({
         name: "admin",
       }).save((err) => {
         if (err) {
@@ -71,7 +63,9 @@ app.get("/", (req, res) => {
 
 require("./routes/auth.routes")(app);
 require("./routes/user.routes")(app);
-require("./routes/product.routes")(app);
+require("./routes/gift.routes")(app);
+require("./routes/event.routes")(app);
+require("./routes/restuarant.routes")(app);
 
 const PORT = process.env.PORT || 8050;
 app.listen(PORT, () => {

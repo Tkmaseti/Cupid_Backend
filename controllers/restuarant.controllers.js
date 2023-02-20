@@ -1,31 +1,31 @@
 const db = require("../models")
-const Product = db.products
+const Restuarant = db.restuarant
+
 
 exports.create = (req, res) => {
   if(!req.body.title){
-      res.status(400).send({message: "Content of the product cannot be empty"});
+      res.status(400).send({message: "Content of the restuarants cannot be empty"});
       return;
   }
 
   console.log(req.body.title)
   // Create
-  const product = new Product({
+  const restuarants = new Restuarant({
     title: req.body.title,
-    description: req.body.description,
-    price: req.body.price,
-    category: req.body.category,
     image: req.body.image,
+    about: req.body.about,
+    restuarantUrl: req.body.restuarantUrl  
   });
 
-  console.log(product)
+  console.log(restuarants)
 
-  product.save(product).then(data => {
+  restuarants.save(restuarants).then(data => {
         console.log(data)
         res.send(data)
     }).catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while creating the product"
+            err.message || "Some error occurred while creating the restuarants"
         });
   });
 };
@@ -34,13 +34,13 @@ exports.findAll = (req, res) => {
 
     var condition = title ? { title: {$regex: new RegExp(title), $options: "i"} } : {};
 
-    Product.find(condition)
+    Restuarant.find(condition)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occured while retriveing products"
+                message: err.message || "Some error occured while retriveing restuarants"
             });
         });
 };
@@ -48,16 +48,16 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
   
-    Product.findById(id)
+    Restuarant.findById(id)
       .then(data => {
         if (!data)
-          res.status(404).send({ message: "Not found Product with id " + id });
+          res.status(404).send({ message: "Not found restuarants with id " + id });
         else res.send(data);
       })
       .catch(err => {
         res
           .status(500)
-          .send({ message: "Error retrieving Products with id=" + id });
+          .send({ message: "Error retrieving restuarants with id=" + id });
       });
 };
 
@@ -70,17 +70,17 @@ exports.update = (req, res) => {
 
   const id = req.params.id;
 
-  Product.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  Restuarant.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot update Product with id=${id}. Maybe Product was not created!`
+          message: `Cannot update restuarants with id=${id}. Maybe restuarants was not created!`
         });
       } else res.send({ message: "Post was updated successfully." });
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating the Product with id=" + id
+        message: "Error updating the restuarants with id=" + id
       });
     });
 };
@@ -88,36 +88,36 @@ exports.update = (req, res) => {
 exports.deleteOne = (req, res) => {
   const id = req.params.id;
 
-  Product.findByIdAndRemove(id, { useFindAndModify: false })
+  Restuarant.findByIdAndRemove(id, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot delete Product with id=${id}. Maybe Product was not created!`
+          message: `Cannot delete restuarants with id=${id}. Maybe restuarants was not created!`
         });
       } else {
         res.send({
-          message: "Product was deleted successfully!"
+          message: "restuarants was deleted successfully!"
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Product with id=" + id
+        message: "Could not delete restuarants with id=" + id
       });
     });
 };
 
 exports.deleteAll = (req, res) => {
-    Product.deleteMany({})
+    Restuarant.deleteMany({})
       .then(data => {
         res.send({
-          message:` ${data.deletedCount} Product were deleted successfully!`
+          message:` ${data.deletedCount} restuarants were deleted successfully!`
         });
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while removing all Product."
+            err.message || "Some error occurred while removing all restuarants."
         });
       });
 };
