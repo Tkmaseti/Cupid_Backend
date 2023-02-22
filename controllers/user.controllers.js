@@ -39,7 +39,7 @@ exports.update = (req, res) => {
     });
 };
 
-exports.findAll = (req, res) => {
+exports.findOne = (req, res) => {
   const title = req.query.title;
 
   var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
@@ -51,22 +51,6 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message: err.message || "Some error occured while retriveing gift"
-      });
-    });
-};
-
-exports.findAllProfession = (req, res) => {
-  const professionality = req.params.profession;
-  User.find({ 
-    profession:  professionality
-  })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving posts."
       });
     });
 };

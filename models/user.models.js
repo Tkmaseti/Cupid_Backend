@@ -9,17 +9,20 @@ module.exports = mongoose => {
         },
         facebook: {
             type: String,
-            required: false
+            required: false,
         },
         whatsapp: {
             type: String,
-            required: false
+            required: false,
         },
         password: {
             type: String,
-            required: false
+            required: false,
         },
-        interest: [String],
+        interest: {
+            type: [String],
+            required: false,
+        },
         image: {
             type: String,
             required: false,
