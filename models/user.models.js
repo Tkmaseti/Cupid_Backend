@@ -3,7 +3,23 @@ module.exports = mongoose => {
     const user = new mongoose.Schema({
         username: String,
         email: String,
-        password: String,
+        instagram: {
+            type: String,
+            required: false
+        },
+        facebook: {
+            type: String,
+            required: false
+        },
+        whatsapp: {
+            type: String,
+            required: false
+        },
+        password: {
+            type: String,
+            required: false
+        },
+        interest: [String],
         image: {
             type: String,
             required: false,

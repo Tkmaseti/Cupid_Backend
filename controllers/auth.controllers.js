@@ -13,6 +13,10 @@ exports.signup = (req, res) => {
         email: req.body.email,
         about: req.body.about,
         phone: req.body.phone,
+        instagram: req.body.instagram,
+        facebook: req.body.facebook,
+        whatsapp: req.body.whatsapp,
+        interest: req.body.interest,
         password: bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(req.body.password, salt, function(err, hash) {
             });
@@ -88,6 +92,10 @@ exports.signin = (req, res) => {
                 roles: user.roles,
                 image: user.image,
                 email: user.email,
+                instagram: user.instagram,
+                facebook: user.facebook,
+                whatsapp: user.whatsapp,
+                interest: user.interest,
             }, config.secret, {
                 expiresIn: 86400 // 24 hours
             });
@@ -95,7 +103,8 @@ exports.signin = (req, res) => {
                 authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
             }
             res.status(200).send({
-                id: user._id, username: user.username, userImage: user.image,userMail: user.email,roles: authorities, accessToken: token
+                id: user._id, username: user.username, userImage: user.image,userMail: user.email, whatsapp: user.whatsapp,
+                roles: authorities, instagram: user.instagram, facebook: user.facebook, interest: user.interest, accessToken: token, 
             });
         });
 };
